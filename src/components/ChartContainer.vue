@@ -26,10 +26,11 @@ export default {
     chartdata: null
   }),
   async mounted () {
-    this.loaded = false
     try {
-      console.info({WS_URL:process.env.WS_URL});
-      const {data} = await axios.get(`${process.env.WS_URL || ''}/measurements`);
+      this.loaded = false
+      const base = process.env.WS_URL || 'https://weather-stats-playvox-test.herokuapp.com';
+      console.info({base});
+      const {data} = await axios.get(`${base}/measurements`);
 
       this.chartdata = {
         labels: data.map(({number}) => number).map(parseFloat),
@@ -41,12 +42,12 @@ export default {
             fill: false,
             length:7
           },
-          // {
-          //   label: 'relative_humidity_3pm',
-          //   backgroundColor: 'blue',
-          //   data: data.map(({relative_humidity_3pm}) => parseFloat(relative_humidity_3pm)),
-          //   fill: false
-          // },
+           {
+             label: 'relative_humidity_3pm',
+             backgroundColor: 'blue',
+             data: data.map(({relative_humidity_3pm}) => parseFloat(relative_humidity_3pm)),
+             fill: false
+           },
         ]
       }
 
