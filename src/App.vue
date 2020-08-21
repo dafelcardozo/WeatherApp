@@ -1,9 +1,14 @@
 <template>
   <div id="app">
-    <b-alert show variant="success" dismissible>Success Alert</b-alert>
-    <b-button v-b-modal.my-modal>Upload dataset</b-button>
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-nav class="ml-auto">
+        <b-button v-b-modal.my-modal>Upload dataset</b-button>
+      </b-navbar-nav>
+    </b-navbar>
+    <b-alert :show="dismissCountDown" @dismiss-count-down="countDownChanged" variant="success" dismissible ref="success">File uploaded and dataset created!</b-alert>
+    <b-alert :show="showError" variant="danger" dismissible ref="error">The server has rejected your file! Don't worry, just change the file and try again.</b-alert>
     <b-modal id="my-modal" title="Upload a new dataset" hide-footer  ref="my-modal">
-      <upload-form v-on:uploadComplete="hide" />
+      <upload-form v-on:uploadComplete="onUploadComplete" />
     </b-modal>
   </div>
 </template>
@@ -16,9 +21,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import UploadForm from "@/components/UploadForm";
 
-// Install BootstrapVue
 Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
 export default {
@@ -29,6 +32,9 @@ export default {
   },
   data: () => ({
     showModal: false,
+    dismissSecs: 5,
+    dismissCountDown: 0,
+    showError: false
   }),
   mounted() {
     this.$on('uploadComplete',() => this.$refs['my-modal'].hide());
@@ -36,9 +42,15 @@ export default {
 
   },
   methods: {
-
-    hide() {
-      this.$refs['my-modal'].hide()
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown;
+    },
+    onUploadComplete(arg) {
+      this.$refs['my-modal'].hide();
+      if (arg === 'Success')
+        this.dismissCountDown = this.dismissSecs;
+      if (arg === 'Error')
+        this.showError = true;
     }
   }
 }
@@ -49,8 +61,5 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

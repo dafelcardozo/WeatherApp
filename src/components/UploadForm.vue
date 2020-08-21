@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="loading">
-      <b-spinner label="Loading..."></b-spinner>
+    <div class="d-flex justify-content-center mb-3" v-if="loading">
+      <b-spinner label="Loading..."  class="m-5" >></b-spinner>
     </div>
     <div v-else-if="!loading">
       <label>
@@ -37,27 +37,30 @@ name: "UploadForm",
   },
   methods: {
     async doUpload () {
-      this.loading=true;
-      const formData = new FormData();
-      formData.append('name', this.dataset_name);
-      formData.append('column_delimiter', this.column_delimiter);
-      formData.append('decimal_separator', ',');
-      formData.append('file', this.file);
+      try {
+        this.loading = true;
+        const formData = new FormData();
+        formData.append('name', this.dataset_name);
+        formData.append('column_delimiter', this.column_delimiter);
+        formData.append('decimal_separator', ',');
+        formData.append('file', this.file);
 
-      const resp = await axios.post( 'https://weather-stats-playvox-test.herokuapp.com/upload_measurements',
-          formData,
-          { headers: { 'Content-Type': 'multipart/form-data' } }
-      );
-      console.info({resp});
-      this.loading = false;
-      this.$emit('uploadComplete',{message:'OK'});
+        await axios.post('https://weather-stats-playvox-test.herokuapp.com/upload_measurements',
+            formData,
+            {headers: {'Content-Type': 'multipart/form-data'}}
+        );
+        this.$emit('uploadComplete', 'Success');
+      } catch (error) {
+        this.$emit('uploadComplete', 'Error');
+      } finally {
+        this.loading = false;
+      }
     },
     handleFileChange(){
       this.file = this.$refs.file.files[0];
     },
     cancel() {
-      this.$emit('uploadComplete',{message:'OK'});
-      console.info('emitted uploadComplete');
+      this.$emit('uploadComplete','Canceled');
     }
   }
 }
