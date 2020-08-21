@@ -2,7 +2,7 @@
   <div class="container">
     <div>Month: {{month}} {{year}}</div>
     <pressure-line v-if="loaded"
-                   :data="pressure"
+                   :chartData="pressure"
                    />
   </div>
 </template>
@@ -16,12 +16,25 @@ export default {
   components: {PressureLine  },
   data: () => ({
     loaded: false,
-    pressure: null,
-    year:2011,
-    month:10
+    pressure: null
   }),
+  props: ['month', 'year'],
+  watch: {
+    month: function() {
+      this.update();
+    },
+    year: function() {
+      this.update();
+    }
+  },
   async mounted () {
       this.loaded = false;
+      await this.update();
+      this.loaded = true
+
+  },
+  methods: {
+    async update() {
       const {data} = await axios.get(`${process.env.VUE_APP_WS_URL}/measurements?month=${this.month}&year=${this.year}`);
       this.pressure = {
         labels: data.map(({date}) => date.split('-')[2]),
@@ -33,9 +46,7 @@ export default {
           }
         ]
       }
-      console.info({pressure:this.pressure});
-      this.loaded = true
-
+    }
   }
 }
 </script>

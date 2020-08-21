@@ -1,10 +1,10 @@
 <template>
   <div>
-    <ul class="list-group">
-      <li v-for="[a, b, month] in months" :key="month" class="list-group-item">
-        {{month}}
-      </li>
-    </ul>
+    <div class="list-group">
+      <a class="list-group-item" v-for="[year, month, str] in months" :key="str" v-on:click="() => setMonth(year, month)">
+        {{str}}
+      </a>
+    </div>
   </div>
 </template>
 
@@ -19,6 +19,11 @@ name: "MonthsList",
   async mounted () {
       const {data} = await axios.get(`${process.env.VUE_APP_WS_URL}/available_months`);
       this.months = data;
+  },
+  methods: {
+    setMonth( year, month) {
+      this.$emit('switchedDateRange',{month, year});
+    }
   }
 }
 </script>

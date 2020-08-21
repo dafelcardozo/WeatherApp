@@ -13,11 +13,11 @@
     <div class="container">
       <div class="row">
         <div class="col-sm">
-          <months-list />
+          <months-list v-on:switchedDateRange="onSwitchedDateRange" />
         </div>
         <div class="col-sm">
           <chart-container />
-          <monthly-charts-container />
+          <monthly-charts-container :month="month" :year="year"/>
         </div>
       </div>
     </div>
@@ -53,7 +53,9 @@ export default {
     showModal: false,
     dismissSecs: 5,
     dismissCountDown: 0,
-    showError: false
+    showError: false,
+    month:10,
+    year:2011
   }),
   methods: {
     countDownChanged(dismissCountDown) {
@@ -65,6 +67,10 @@ export default {
         this.dismissCountDown = this.dismissSecs;
       if (arg === 'Error')
         this.showError = true;
+    },
+    onSwitchedDateRange({month, year}) {
+      this.month = month;
+      this.year = year;
     }
   }
 }
