@@ -16,7 +16,7 @@
 
 <script>
 import FirstBar from './FirstBar.vue'
-import axios from 'axios'
+//import axios from 'axios'
 
 export default {
   name: 'LineChartContainer',
@@ -28,6 +28,7 @@ export default {
   async mounted () {
     try {
       this.loaded = false
+      /*
       const base = process.env.WS_URL || 'https://weather-stats-playvox-test.herokuapp.com';
       console.info({base});
       const {data} = await axios.get(`${base}/measurements`);
@@ -50,7 +51,7 @@ export default {
            },
         ]
       }
-
+*/
       this.loaded = true
     } catch (e) {
       console.error(e)
