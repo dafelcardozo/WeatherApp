@@ -1,9 +1,9 @@
 
 <script>
-import { Line  } from 'vue-chartjs';
+import { Radar  } from 'vue-chartjs';
 
 export default {
-  extends: Line,
+  extends: Radar,
   props: {
     chartdata: {
       type: Object,

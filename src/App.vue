@@ -10,6 +10,8 @@
     <b-modal id="my-modal" title="Upload a new dataset" hide-footer  ref="my-modal">
       <upload-form v-on:uploadComplete="onUploadComplete" />
     </b-modal>
+    Chart:
+    <chart-container />
   </div>
 </template>
 
@@ -20,6 +22,7 @@ import { BModal, BButton, BAlert } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import UploadForm from "@/components/UploadForm";
+import ChartContainer from "@/components/ChartContainer";
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -27,6 +30,7 @@ Vue.use(IconsPlugin)
 export default {
   name: 'App',
   components: {
+    ChartContainer,
     UploadForm,
     BModal, BButton, BAlert
   },

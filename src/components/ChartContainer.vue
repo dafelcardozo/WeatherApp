@@ -16,10 +16,10 @@
 
 <script>
 import FirstBar from './FirstBar.vue'
-//import axios from 'axios'
+import axios from 'axios'
 
 export default {
-  name: 'LineChartContainer',
+  name: 'ChartContainer',
   components: { FirstBar },
   data: () => ({
     loaded: false,
@@ -28,30 +28,22 @@ export default {
   async mounted () {
     try {
       this.loaded = false
-      /*
-      const base = process.env.WS_URL || 'https://weather-stats-playvox-test.herokuapp.com';
+      const base = process.env.VUE_APP_WS_URL ; //|| 'https://weather-stats-playvox-test.herokuapp.com';
       console.info({base});
-      const {data} = await axios.get(`${base}/measurements`);
+      const {data} = await axios.get(`${base}/aggregate_awd9`);
 
       this.chartdata = {
-        labels: data.map(({number}) => number).map(parseFloat),
+        labels: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],//Object.keys(data),
         datasets: [
           {
-            label: 'relative_humidity_9am',
-            backgroundColor: 'green',
-            data: data.map(({relative_humidity_9am}) => parseFloat(relative_humidity_9am)),
-            fill: false,
-            length:7
-          },
-           {
-             label: 'relative_humidity_3pm',
-             backgroundColor: 'blue',
-             data: data.map(({relative_humidity_3pm}) => parseFloat(relative_humidity_3pm)),
-             fill: false
+            label: 'Average wind direction at 9am',
+            backgroundColor: "rgba(255,10,13,0.6)",
+            data: Object.values(data),
+
            },
         ]
       }
-*/
+
       this.loaded = true
     } catch (e) {
       console.error(e)
