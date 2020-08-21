@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <first-bar
+    <wind-radar
         v-if="loaded"
         :chartdata="chartdata"
         :options="{responsive: true, maintainAspectRatio: false,  scale: {
@@ -12,12 +12,12 @@
 </template>
 
 <script>
-import FirstBar from './FirstBar.vue'
+import WindRadar from './WindRadar.vue'
 import axios from 'axios'
 
 export default {
   name: 'ChartContainer',
-  components: { FirstBar },
+  components: { WindRadar },
   data: () => ({
     loaded: false,
     chartdata: null

@@ -17,6 +17,7 @@
         </div>
         <div class="col-sm">
           <chart-container />
+          <monthly-charts-container />
         </div>
       </div>
     </div>
@@ -34,6 +35,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import UploadForm from "@/components/UploadForm";
 import ChartContainer from "@/components/ChartContainer";
 import MonthsList from "@/components/MonthsList";
+import MonthlyChartsContainer from "@/components/MonthlyChartsContainer";
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -44,7 +46,8 @@ export default {
     MonthsList,
     ChartContainer,
     UploadForm,
-    BModal, BButton, BAlert
+    BModal, BButton, BAlert,
+    MonthlyChartsContainer
   },
   data: () => ({
     showModal: false,
