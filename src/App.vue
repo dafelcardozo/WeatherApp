@@ -16,6 +16,7 @@
           <months-list v-on:switchedDateRange="onSwitchedDateRange" />
         </div>
         <div class="col-sm">
+          <div>Month: {{month}} {{year}}</div>
           <chart-container />
           <monthly-charts-container :month="month" :year="year"/>
         </div>

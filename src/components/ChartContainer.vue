@@ -16,7 +16,6 @@ import WindRadar from './WindRadar.vue'
 import axios from 'axios'
 
 export default {
-  name: 'ChartContainer',
   components: { WindRadar },
   data: () => ({
     loaded: false,
@@ -27,7 +26,6 @@ export default {
       this.loaded = false;
       const {data} = await axios.get(`${process.env.VUE_APP_WS_URL}/wind_direction_aggregates`);
       const {avg_wind_direction_9am, max_wind_direction_9am} = data;
-
 
       this.chartdata = {
         labels: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],

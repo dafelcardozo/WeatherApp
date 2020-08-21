@@ -18,11 +18,6 @@ export default {
   },
   mounted () {
     this.renderChart(this.chartData,  {
-      elements: {
-        line: {
-          borderColor: "rgb(255,0,0)"
-        }
-      },
 
     }
   )

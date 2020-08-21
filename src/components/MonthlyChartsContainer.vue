@@ -1,9 +1,10 @@
 <template>
   <div class="container">
-    <div>Month: {{month}} {{year}}</div>
+    <wind-speed v-if="loaded" :chart-data="windSpeed"/>
     <pressure-line v-if="loaded" :chartData="pressure" />
     <temperature-line v-if="loaded" :chartData="temperature"/>
     <humidity-chart v-if="loaded" :chartData="humidity" />
+
   </div>
 </template>
 
@@ -13,14 +14,16 @@ import axios from 'axios';
 import PressureLine from "@/components/PressureLine";
 import TemperatureLine from "@/components/TemperatureLine";
 import HumidityChart from "@/components/HumidityChart";
+import WindSpeed from "@/components/WindSpeed";
 
 export default {
-  components: {HumidityChart, TemperatureLine, PressureLine  },
+  components: {WindSpeed, HumidityChart, TemperatureLine, PressureLine  },
   data: () => ({
     loaded: false,
     pressure: null,
     temperature:null,
-    humidity:null
+    humidity:null,
+    windSpeed:null
   }),
   props: ['month', 'year'],
   watch: {
@@ -40,8 +43,9 @@ export default {
   methods: {
     async update() {
       const {data} = await axios.get(`${process.env.VUE_APP_WS_URL}/measurements?month=${this.month}&year=${this.year}`);
+      const days = data.map(({date}) => date.split('-')[2]);
       this.pressure = {
-        labels: data.map(({date}) => date.split('-')[2]),
+        labels: days,
         datasets: [
           {
             label: '9 am Pressure this month',
@@ -51,7 +55,7 @@ export default {
         ]
       };
       this.temperature = {
-        labels: data.map(({date}) => date.split('-')[2]),
+        labels: days,
         datasets: [
           {
             label: '9 am Temperature this month',
@@ -61,17 +65,32 @@ export default {
         ]
       };
       this.humidity = {
-        labels: data.map(({date}) => date.split('-')[2]),
+        labels: days,
         datasets: [
           {
-            label: '9 am Relative humidity this month',
+            label: '9 am relative humidity this month',
             backgroundColor: "rgba(10,255,0, 0.2)",
             data: data.map(({relative_humidity_9am}) => relative_humidity_9am),
           },
           {
-            label: '9 am Relative humidity this month',
+            label: '3 pm relative humidity this month',
             backgroundColor: "rgba(240,230,140, 0.9)",
             data: data.map(({relative_humidity_3pm}) => relative_humidity_3pm),
+          }
+        ]
+      };
+      this.windSpeed   = {
+        labels: days,
+        datasets: [
+          {
+            label: 'Avg 9 am wind speed this month',
+            backgroundColor: "rgba(10,255,0, 0.2)",
+            data: data.map(({avg_wind_speed_9am}) => avg_wind_speed_9am),
+          },
+          {
+            label: 'Max 9 am wind speed this month',
+            backgroundColor: "rgba(240,230,140, 0.9)",
+            data: data.map(({max_wind_speed_9am}) => max_wind_speed_9am),
           }
         ]
       }
