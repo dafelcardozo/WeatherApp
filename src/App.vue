@@ -10,8 +10,18 @@
     <b-modal id="my-modal" title="Upload a new dataset" hide-footer  ref="my-modal">
       <upload-form v-on:uploadComplete="onUploadComplete" />
     </b-modal>
-    Chart:
-    <chart-container />
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <months-list />
+        </div>
+        <div class="col-sm">
+          <chart-container />
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </template>
 
@@ -23,6 +33,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import UploadForm from "@/components/UploadForm";
 import ChartContainer from "@/components/ChartContainer";
+import MonthsList from "@/components/MonthsList";
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -30,6 +41,7 @@ Vue.use(IconsPlugin)
 export default {
   name: 'App',
   components: {
+    MonthsList,
     ChartContainer,
     UploadForm,
     BModal, BButton, BAlert
@@ -40,11 +52,6 @@ export default {
     dismissCountDown: 0,
     showError: false
   }),
-  mounted() {
-    this.$on('uploadComplete',() => this.$refs['my-modal'].hide());
-    this.$on('uploadCanceled',() => console.info('acá'));
-
-  },
   methods: {
     countDownChanged(dismissCountDown) {
       this.dismissCountDown = dismissCountDown;

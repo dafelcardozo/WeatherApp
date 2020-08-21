@@ -3,13 +3,10 @@
     <first-bar
         v-if="loaded"
         :chartdata="chartdata"
-        :options="{responsive: true, maintainAspectRatio: false,  scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }}"
+        :options="{responsive: true, maintainAspectRatio: false,  scale: {
+        angleLines: {
+            display: false
+        }}}"
         />
   </div>
 </template>
@@ -27,20 +24,25 @@ export default {
   }),
   async mounted () {
     try {
-      this.loaded = false
-      const base = process.env.VUE_APP_WS_URL ; //|| 'https://weather-stats-playvox-test.herokuapp.com';
-      console.info({base});
-      const {data} = await axios.get(`${base}/aggregate_awd9`);
+      this.loaded = false;
+      const {data} = await axios.get(`${process.env.VUE_APP_WS_URL}/wind_direction_aggregates`);
+      const {avg_wind_direction_9am, max_wind_direction_9am} = data;
+
 
       this.chartdata = {
-        labels: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],//Object.keys(data),
+        labels: ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'],
         datasets: [
           {
             label: 'Average wind direction at 9am',
             backgroundColor: "rgba(255,10,13,0.6)",
-            data: Object.values(data),
-
+            data: Object.values(avg_wind_direction_9am),
            },
+          {
+            label: 'Max wind direction at 9am',
+            backgroundColor: "rgba(255,255,13,0.6)",
+            data: Object.values(max_wind_direction_9am),
+
+          },
         ]
       }
 

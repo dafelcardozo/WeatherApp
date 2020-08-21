@@ -45,7 +45,7 @@ name: "UploadForm",
         formData.append('decimal_separator', ',');
         formData.append('file', this.file);
 
-        await axios.post('https://weather-stats-playvox-test.herokuapp.com/upload_measurements',
+        await axios.post(`${process.env.VUE_APP_WS_URL}/upload_measurements`,
             formData,
             {headers: {'Content-Type': 'multipart/form-data'}}
         );
