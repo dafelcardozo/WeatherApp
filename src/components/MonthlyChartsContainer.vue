@@ -20,6 +20,9 @@
       <div class="col">
         <humidity-chart v-if="loaded" :chartData="humidity" />
       </div>
+      <div class="col">
+        Placeholder
+      </div>
     </div>
   </div>
 </template>

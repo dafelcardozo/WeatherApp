@@ -21,6 +21,14 @@ export default {
     chartdata: null
   }),
   props: ['month', 'year'],
+  watch: {
+    month: function() {
+      this.update();
+    },
+    year: function() {
+      this.update();
+    }
+  },
   async mounted () {
     try {
       this.loaded = false;
