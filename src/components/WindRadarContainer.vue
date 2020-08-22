@@ -1,21 +1,24 @@
 <template>
-  <div class="container">
-    <wind-radar
-        v-if="loaded"
+  <b-card v-if="loaded">
+    <b-card-text>
+      <wind-radar
         :chart-data="chartdata"
         :options="{responsive: true, maintainAspectRatio: false, scale: {
         angleLines: {
             display: false
         }}}"
-        />
-  </div>
+      />
+    </b-card-text>
+  </b-card>
 </template>
 <script>
 import WindRadar from './WindRadar.vue'
-import axios from 'axios'
+import axios from 'axios';
+import {BCard, BCardText} from 'bootstrap-vue';
+
 
 export default {
-  components: { WindRadar },
+  components: { WindRadar, BCardText, BCard },
   data: () => ({
     loaded: false,
     chartdata: null

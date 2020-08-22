@@ -5,23 +5,38 @@
         <wind-radar-container :month="month" :year="year"/>
       </div>
       <div class="col">
-        <wind-speed v-if="loaded" :chart-data="windSpeed"/>
+        <b-card v-if="loaded">
+          <b-card-text>
+            <wind-speed :chart-data="windSpeed"/>
+          </b-card-text>
+        </b-card>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <pressure-line v-if="loaded" :chartData="pressure" />
+        <b-card v-if="loaded">
+          <b-card-text>
+            <pressure-line  :chartData="pressure" />
+          </b-card-text>
+        </b-card>
       </div>
       <div class="col">
-        <temperature-line v-if="loaded" :chartData="temperature"/>
+        <b-card v-if="loaded">
+          <b-card-text>
+            <temperature-line :chartData="temperature"/>
+          </b-card-text>
+        </b-card>
       </div>
     </div>
     <div class="row">
       <div class="col">
-        <humidity-chart v-if="loaded" :chartData="humidity" />
+        <b-card v-if="loaded" >
+          <b-card-text>
+            <humidity-chart :chartData="humidity" />
+          </b-card-text>
+        </b-card>
       </div>
       <div class="col">
-        Placeholder
       </div>
     </div>
   </div>
@@ -35,9 +50,10 @@ import TemperatureLine from "@/components/TemperatureLine";
 import HumidityChart from "@/components/HumidityChart";
 import WindSpeed from "@/components/WindSpeed";
 import WindRadarContainer from "@/components/WindRadarContainer";
+import {BCard, BCardText} from 'bootstrap-vue';
 
 export default {
-  components: {WindSpeed, HumidityChart, TemperatureLine, PressureLine, WindRadarContainer, },
+  components: {WindSpeed, HumidityChart, TemperatureLine, PressureLine, WindRadarContainer, BCard, BCardText},
   data: () => ({
     loaded: false,
     pressure: null,
