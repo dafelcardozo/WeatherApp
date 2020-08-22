@@ -2,15 +2,14 @@
   <div class="container">
     <wind-radar
         v-if="loaded"
-        :chartdata="chartdata"
-        :options="{responsive: true, maintainAspectRatio: false,  scale: {
+        :chart-data="chartdata"
+        :options="{responsive: true, maintainAspectRatio: false, scale: {
         angleLines: {
             display: false
         }}}"
         />
   </div>
 </template>
-
 <script>
 import WindRadar from './WindRadar.vue'
 import axios from 'axios'
@@ -21,10 +20,20 @@ export default {
     loaded: false,
     chartdata: null
   }),
+  props: ['month', 'year'],
   async mounted () {
     try {
       this.loaded = false;
-      const {data} = await axios.get(`${process.env.VUE_APP_WS_URL}/wind_direction_aggregates`);
+      await this.update();
+    } catch (e) {
+      console.error(e)
+    } finally {
+      this.loaded = true;
+    }
+  },
+  methods: {
+    async update() {
+      const {data} = await axios.get(`${process.env.VUE_APP_WS_URL}/wind_direction_aggregates?month=${this.month}&year=${this.year}`);
       const {avg_wind_direction_9am, max_wind_direction_9am} = data;
 
       this.chartdata = {
@@ -33,22 +42,18 @@ export default {
           {
             label: 'Average wind direction at 9am',
             backgroundColor: "rgba(255,10,13,0.6)",
-            data: Object.values(avg_wind_direction_9am),
-           },
+            data: Object.values(avg_wind_direction_9am)
+          },
           {
             label: 'Max wind direction at 9am',
             backgroundColor: "rgba(255,255,13,0.6)",
-            data: Object.values(max_wind_direction_9am),
-
-          },
+            data: Object.values(max_wind_direction_9am)
+          }
         ]
       }
-
-      this.loaded = true
-    } catch (e) {
-      console.error(e)
     }
   }
+
 }
 </script>
 

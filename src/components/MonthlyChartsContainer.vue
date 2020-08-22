@@ -1,10 +1,26 @@
 <template>
   <div class="container">
-    <wind-speed v-if="loaded" :chart-data="windSpeed"/>
-    <pressure-line v-if="loaded" :chartData="pressure" />
-    <temperature-line v-if="loaded" :chartData="temperature"/>
-    <humidity-chart v-if="loaded" :chartData="humidity" />
-
+    <div class="row">
+      <div class="col">
+        <wind-radar-container :month="month" :year="year"/>
+      </div>
+      <div class="col">
+        <wind-speed v-if="loaded" :chart-data="windSpeed"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <pressure-line v-if="loaded" :chartData="pressure" />
+      </div>
+      <div class="col">
+        <temperature-line v-if="loaded" :chartData="temperature"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <humidity-chart v-if="loaded" :chartData="humidity" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -15,9 +31,10 @@ import PressureLine from "@/components/PressureLine";
 import TemperatureLine from "@/components/TemperatureLine";
 import HumidityChart from "@/components/HumidityChart";
 import WindSpeed from "@/components/WindSpeed";
+import WindRadarContainer from "@/components/WindRadarContainer";
 
 export default {
-  components: {WindSpeed, HumidityChart, TemperatureLine, PressureLine  },
+  components: {WindSpeed, HumidityChart, TemperatureLine, PressureLine, WindRadarContainer, },
   data: () => ({
     loaded: false,
     pressure: null,
@@ -38,7 +55,6 @@ export default {
       this.loaded = false;
       await this.update();
       this.loaded = true
-
   },
   methods: {
     async update() {

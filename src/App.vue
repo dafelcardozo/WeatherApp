@@ -1,6 +1,17 @@
 <template>
   <div id="app">
-    <b-navbar toggleable="lg" type="dark" variant="info">
+    <div>
+      <b-sidebar id="sidebar-1" title="Sidebar" shadow>
+        <div class="px-3 py-2">
+          <months-list v-on:switchedDateRange="onSwitchedDateRange" />
+          <b-img src="https://picsum.photos/500/500/?image=54" fluid thumbnail></b-img>
+        </div>
+      </b-sidebar>
+    </div>
+    <b-navbar toggleable="lg" type="dark" variant="light">
+      <b-navbar-nav>
+        <b-button v-b-toggle.sidebar-1>Toggle Sidebar</b-button>
+      </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
         <b-button v-b-modal.my-modal>Upload dataset</b-button>
       </b-navbar-nav>
@@ -10,31 +21,18 @@
     <b-modal id="my-modal" title="Upload a new dataset" hide-footer  ref="my-modal">
       <upload-form v-on:uploadComplete="onUploadComplete" />
     </b-modal>
-    <div class="container">
-      <div class="row">
-        <div class="col-sm">
-          <months-list v-on:switchedDateRange="onSwitchedDateRange" />
-        </div>
-        <div class="col-sm">
-          <div>Month: {{month}} {{year}}</div>
-          <chart-container />
-          <monthly-charts-container :month="month" :year="year"/>
-        </div>
-      </div>
-    </div>
-
-
+    <div>Month: {{month}} {{year}}</div>
+     <monthly-charts-container :month="month" :year="year"/>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-import { BModal, BButton, BAlert } from 'bootstrap-vue'
+import { BModal, BButton, BAlert, BSidebar } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import UploadForm from "@/components/UploadForm";
-import ChartContainer from "@/components/ChartContainer";
 import MonthsList from "@/components/MonthsList";
 import MonthlyChartsContainer from "@/components/MonthlyChartsContainer";
 
@@ -45,9 +43,8 @@ export default {
   name: 'App',
   components: {
     MonthsList,
-    ChartContainer,
     UploadForm,
-    BModal, BButton, BAlert,
+    BModal, BButton, BAlert, BSidebar,
     MonthlyChartsContainer
   },
   data: () => ({
