@@ -16,8 +16,8 @@
       <b-navbar-nav>
         <b-button v-b-toggle.collapse-1 variant="primary">Tomorrow's prediction</b-button>
       </b-navbar-nav>
-      <b-navbar-nav class="ml-auto" variant="warn">
-        <b-button v-b-modal.my-modal>Upload dataset</b-button>
+      <b-navbar-nav class="ml-auto">
+        <b-button v-b-modal.my-modal variant="warning">Upload dataset</b-button>
       </b-navbar-nav>
     </b-navbar>
     <b-alert :show="dismissCountDown" @dismiss-count-down="countDownChanged" variant="success" dismissible ref="success">File uploaded and dataset created!</b-alert>
