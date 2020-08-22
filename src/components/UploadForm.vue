@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="d-flex justify-content-center mb-3" v-if="loading">
       <b-spinner label="Loading..."  class="m-5" >></b-spinner>
     </div>
@@ -12,6 +12,9 @@
         <b-form-radio v-model="column_delimiter" name="column-delimiter" value=",">,</b-form-radio>
       </b-form-group>
       <div>
+        Warning: the upload will replace all existing data!
+      </div>
+      <div>
         <b-button v-on:click="cancel"  variant="outline-primary">Cancel</b-button>
         <b-button v-on:click="doUpload" variant="primary">Submit</b-button>
       </div>
@@ -20,7 +23,7 @@
 </template>
 
 <script>
-import {  BButton, BFormGroup } from 'bootstrap-vue'
+import {  BButton, BFormGroup} from 'bootstrap-vue'
 import axios from 'axios'
 export default {
 name: "UploadForm",
