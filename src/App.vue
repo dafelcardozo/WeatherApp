@@ -9,14 +9,14 @@
       </b-sidebar>
     </div>
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="#">NavBar</b-navbar-brand>
+      <b-navbar-brand href="#">A weather demo app!</b-navbar-brand>
       <b-navbar-nav>
-        <b-button v-b-toggle.sidebar-1>Explore dataset</b-button>
+        <b-button v-b-toggle.sidebar-1 variant="success">Explore dataset</b-button>
       </b-navbar-nav>
       <b-navbar-nav>
         <b-button v-b-toggle.collapse-1 variant="primary">Tomorrow's prediction</b-button>
       </b-navbar-nav>
-      <b-navbar-nav class="ml-auto">
+      <b-navbar-nav class="ml-auto" variant="warn">
         <b-button v-b-modal.my-modal>Upload dataset</b-button>
       </b-navbar-nav>
     </b-navbar>
@@ -64,7 +64,7 @@ export default {
     showError: false,
     month:10,
     year:2011,
-    dateRangeStr:''
+    dateRangeStr:"Today's data"
   }),
   methods: {
     countDownChanged(dismissCountDown) {

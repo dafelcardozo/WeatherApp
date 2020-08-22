@@ -4,10 +4,6 @@
       <b-spinner label="Loading..."  class="m-5" >></b-spinner>
     </div>
     <div v-else-if="!loading">
-      <label>
-        Dataset name:
-        <b-form-input v-model="dataset_name"  placeholder="Enter a name for this dataset..." required/>
-      </label>
       <label>File:
         <input type="file" id="file" ref="file" v-on:change="handleFileChange"/>
       </label>
@@ -15,18 +11,20 @@
         <b-form-radio v-model="column_delimiter" name="column-delimiter" value=";">;</b-form-radio>
         <b-form-radio v-model="column_delimiter" name="column-delimiter" value=",">,</b-form-radio>
       </b-form-group>
-      <b-button v-on:click="cancel">Cancel</b-button>
-      <b-button v-on:click="doUpload">Submit</b-button>
+      <div>
+        <b-button v-on:click="cancel"  variant="outline-primary">Cancel</b-button>
+        <b-button v-on:click="doUpload" variant="primary">Submit</b-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import {  BButton, BFormGroup, BFormInput } from 'bootstrap-vue'
+import {  BButton, BFormGroup } from 'bootstrap-vue'
 import axios from 'axios'
 export default {
 name: "UploadForm",
-  components: {BButton, BFormGroup, BFormInput},
+  components: {BButton, BFormGroup},
   data: () => {
     return {
       file: '',
@@ -40,7 +38,7 @@ name: "UploadForm",
       try {
         this.loading = true;
         const formData = new FormData();
-        formData.append('name', this.dataset_name);
+        formData.append('name', 'Irrelevant');
         formData.append('column_delimiter', this.column_delimiter);
         formData.append('decimal_separator', ',');
         formData.append('file', this.file);
