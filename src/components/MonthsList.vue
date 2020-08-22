@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="list-group">
-      <a class="list-group-item" v-for="[year, month, str] in months" :key="str" v-on:click="() => setMonth(year, month)">
+      <a class="list-group-item" v-for="[year, month, str] in months" :key="str" v-on:click="() => setMonth(year, month, str)">
         {{str}}
       </a>
     </div>
@@ -21,8 +21,8 @@ name: "MonthsList",
       this.months = data;
   },
   methods: {
-    setMonth( year, month) {
-      this.$emit('switchedDateRange',{month, year});
+    setMonth( year, month, dateRangeStr) {
+      this.$emit('switchedDateRange',{month, year, dateRangeStr});
     }
   }
 }

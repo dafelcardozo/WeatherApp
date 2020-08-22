@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div>
-      <b-sidebar id="sidebar-1" title="Sidebar" shadow>
+      <b-sidebar id="sidebar-1" title="Available months" shadow>
         <div class="px-3 py-2">
           <months-list v-on:switchedDateRange="onSwitchedDateRange" />
           <b-img src="https://picsum.photos/500/500/?image=54" fluid thumbnail></b-img>
@@ -10,7 +10,10 @@
     </div>
     <b-navbar toggleable="lg" type="dark" variant="light">
       <b-navbar-nav>
-        <b-button v-b-toggle.sidebar-1>Toggle Sidebar</b-button>
+        <b-button v-b-toggle.sidebar-1>Explore dataset</b-button>
+      </b-navbar-nav>
+      <b-navbar-nav>
+        <b-button v-b-toggle.collapse-1 variant="primary">Tomorrow's prediction</b-button>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
         <b-button v-b-modal.my-modal>Upload dataset</b-button>
@@ -21,20 +24,27 @@
     <b-modal id="my-modal" title="Upload a new dataset" hide-footer  ref="my-modal">
       <upload-form v-on:uploadComplete="onUploadComplete" />
     </b-modal>
-    <div>Month: {{month}} {{year}}</div>
-     <monthly-charts-container :month="month" :year="year"/>
+    <div class="container">
+      <b-collapse id="collapse-1" class="mt-2" visible >
+
+        <prediction/>
+      </b-collapse>
+    </div>
+
+
+     <monthly-charts-container :month="month" :year="year" :dateRangeStr="dateRangeStr"/>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-import { BModal, BButton, BAlert, BSidebar } from 'bootstrap-vue'
+import {BAlert, BButton, BModal, BootstrapVue, BSidebar, IconsPlugin} from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import UploadForm from "@/components/UploadForm";
 import MonthsList from "@/components/MonthsList";
 import MonthlyChartsContainer from "@/components/MonthlyChartsContainer";
+import Prediction from "@/Prediction";
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -42,10 +52,11 @@ Vue.use(IconsPlugin)
 export default {
   name: 'App',
   components: {
+    Prediction,
     MonthsList,
     UploadForm,
     BModal, BButton, BAlert, BSidebar,
-    MonthlyChartsContainer
+    MonthlyChartsContainer,
   },
   data: () => ({
     showModal: false,
@@ -53,7 +64,8 @@ export default {
     dismissCountDown: 0,
     showError: false,
     month:10,
-    year:2011
+    year:2011,
+    dateRangeStr:''
   }),
   methods: {
     countDownChanged(dismissCountDown) {
@@ -66,9 +78,10 @@ export default {
       if (arg === 'Error')
         this.showError = true;
     },
-    onSwitchedDateRange({month, year}) {
+    onSwitchedDateRange({month, year, dateRangeStr}) {
       this.month = month;
       this.year = year;
+      this.dateRangeStr = dateRangeStr;
     }
   }
 }

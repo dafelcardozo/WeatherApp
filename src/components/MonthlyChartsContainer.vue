@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <h2>{{dateRangeStr}}</h2>
     <div class="row">
       <div class="col">
         <wind-radar-container :month="month" :year="year"/>
@@ -61,7 +62,7 @@ export default {
     humidity:null,
     windSpeed:null
   }),
-  props: ['month', 'year'],
+  props: ['month', 'year', 'dateRangeStr'],
   watch: {
     month: function() {
       this.update();
