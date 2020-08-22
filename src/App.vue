@@ -8,7 +8,8 @@
         </div>
       </b-sidebar>
     </div>
-    <b-navbar toggleable="lg" type="dark" variant="light">
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-brand href="#">NavBar</b-navbar-brand>
       <b-navbar-nav>
         <b-button v-b-toggle.sidebar-1>Explore dataset</b-button>
       </b-navbar-nav>
@@ -30,21 +31,19 @@
         <prediction/>
       </b-collapse>
     </div>
-
-
      <monthly-charts-container :month="month" :year="year" :dateRangeStr="dateRangeStr"/>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import {BAlert, BButton, BModal, BootstrapVue, BSidebar, IconsPlugin} from 'bootstrap-vue'
+import {BAlert, BButton, BModal, BootstrapVue, BSidebar, IconsPlugin, BNavbarBrand} from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import UploadForm from "@/components/UploadForm";
 import MonthsList from "@/components/MonthsList";
 import MonthlyChartsContainer from "@/components/MonthlyChartsContainer";
-import Prediction from "@/Prediction";
+import Prediction from "@/components/Prediction";
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -56,7 +55,7 @@ export default {
     MonthsList,
     UploadForm,
     BModal, BButton, BAlert, BSidebar,
-    MonthlyChartsContainer,
+    MonthlyChartsContainer, BNavbarBrand
   },
   data: () => ({
     showModal: false,
