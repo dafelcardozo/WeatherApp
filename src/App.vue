@@ -27,7 +27,6 @@
     </b-modal>
     <div class="container">
       <b-collapse id="collapse-1" class="mt-2" visible >
-
         <prediction/>
       </b-collapse>
     </div>
