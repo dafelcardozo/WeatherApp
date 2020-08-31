@@ -3,7 +3,6 @@
     <div class="row">
       <div class="col">
         <h2>{{dateRangeStr}}</h2>
-
       </div>
     </div>
     <div class="row">
@@ -11,7 +10,7 @@
         <wind-radar-container :month="month" :year="year"/>
       </div>
       <div class="col">
-        <b-card v-if="loaded">
+        <b-card v-if="loaded" bg-variant="light">
           <b-card-text>
             <simple-line-wrapper :chart-data="windSpeed"/>
           </b-card-text>
@@ -20,14 +19,14 @@
     </div>
     <div class="row">
       <div class="col">
-        <b-card v-if="loaded">
+        <b-card v-if="loaded" bg-variant="light">
           <b-card-text>
             <simple-line-wrapper :chartData="pressure" />
           </b-card-text>
         </b-card>
       </div>
       <div class="col">
-        <b-card v-if="loaded">
+        <b-card v-if="loaded" bg-variant="light">
           <b-card-text>
             <simple-line-wrapper :chartData="temperature"/>
           </b-card-text>
@@ -36,7 +35,7 @@
     </div>
     <div class="row">
       <div class="col">
-        <b-card v-if="loaded" >
+        <b-card v-if="loaded" bg-variant="light">
           <b-card-text>
             <simple-line-wrapper :chartData="humidity" />
           </b-card-text>
