@@ -16,14 +16,6 @@
         </b-list-group>
       </div>
     </div>
-    <!--
-    <b-list-group>
-      <b-list-group-item button v-for="[year, month, str] in months" :key="str" v-on:click="() => setMonth(year, month, str)"
-                         :active="activeMonth === month && activeYear === year">
-        {{str}}
-      </b-list-group-item>
-    </b-list-group>
--->
   </div>
 </template>
 
