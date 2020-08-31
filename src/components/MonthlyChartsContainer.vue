@@ -13,7 +13,7 @@
       <div class="col">
         <b-card v-if="loaded">
           <b-card-text>
-            <wind-speed :chart-data="windSpeed"/>
+            <simple-line-wrapper :chart-data="windSpeed"/>
           </b-card-text>
         </b-card>
       </div>
@@ -22,14 +22,14 @@
       <div class="col">
         <b-card v-if="loaded">
           <b-card-text>
-            <pressure-line  :chartData="pressure" />
+            <simple-line-wrapper :chartData="pressure" />
           </b-card-text>
         </b-card>
       </div>
       <div class="col">
         <b-card v-if="loaded">
           <b-card-text>
-            <temperature-line :chartData="temperature"/>
+            <simple-line-wrapper :chartData="temperature"/>
           </b-card-text>
         </b-card>
       </div>
@@ -38,7 +38,7 @@
       <div class="col">
         <b-card v-if="loaded" >
           <b-card-text>
-            <humidity-chart :chartData="humidity" />
+            <simple-line-wrapper :chartData="humidity" />
           </b-card-text>
         </b-card>
       </div>
@@ -51,15 +51,12 @@
 <script>
 
 import axios from 'axios';
-import PressureLine from "@/components/PressureLine";
-import TemperatureLine from "@/components/TemperatureLine";
-import HumidityChart from "@/components/HumidityChart";
-import WindSpeed from "@/components/WindSpeed";
+import SimpleLineWrapper from "@/components/SimpleLineWrapper";
 import WindRadarContainer from "@/components/WindRadarContainer";
 import {BCard, BCardText} from 'bootstrap-vue';
 
 export default {
-  components: {WindSpeed, HumidityChart, TemperatureLine, PressureLine, WindRadarContainer, BCard, BCardText},
+  components: {  SimpleLineWrapper, WindRadarContainer, BCard, BCardText},
   data: () => ({
     loaded: false,
     pressure: null,

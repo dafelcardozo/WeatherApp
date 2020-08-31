@@ -34,8 +34,8 @@ export default {
     loaded: false
   }),
   async mounted () {
-    this.loaded = false;
     try {
+      this.loaded = false;
       const {data} = await axios.get(`${process.env.VUE_APP_WS_URL}/today_prediction`);
       const {humidity, temperature, pressure, wind_direction, wind_speed, phrase} = data;
       this.humidity = humidity;
