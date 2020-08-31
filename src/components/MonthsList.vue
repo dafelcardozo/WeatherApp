@@ -1,20 +1,25 @@
 <template>
   <div>
-    <div class="list-group">
-      <a class="list-group-item" v-for="[year, month, str] in months" :key="str" v-on:click="() => setMonth(year, month, str)">
+    <b-list-group>
+      <b-list-group-item button v-for="[year, month, str] in months" :key="str" v-on:click="() => setMonth(year, month, str)"
+                         :active="activeMonth === month && activeYear === year">
         {{str}}
-      </a>
-    </div>
+      </b-list-group-item>
+    </b-list-group>
+
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import { BListGroup, BListGroupItem} from 'bootstrap-vue'
 
 export default {
-name: "MonthsList",
+  components: { BListGroup, BListGroupItem},
   data: () => ({
-    months:[]
+    months:[],
+    activeMonth:'',
+    activeYear:''
   }),
   async mounted () {
       const {data} = await axios.get(`${process.env.VUE_APP_WS_URL}/available_months`);
@@ -22,7 +27,10 @@ name: "MonthsList",
   },
   methods: {
     setMonth( year, month, dateRangeStr) {
+      console.info('click handler');
       this.$emit('switchedDateRange',{month, year, dateRangeStr});
+      this.activeMonth = month;
+      this.activeYear = year;
     }
   }
 }
