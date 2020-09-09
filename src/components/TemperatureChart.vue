@@ -11,10 +11,7 @@ export default {
   components: {  SimpleLineWrapper },
   data: () => ({
     loaded: false,
-    pressure: null,
     temperature:null,
-    humidity:null,
-    windSpeed:null
   }),
   props: ['month', 'year', 'dateRangeStr'],
   watch: {

@@ -49,7 +49,7 @@ export default {
     },
     callUpdate() {
       if (this.activeMonth && this.activeYear)
-        this.$emit('switchedDateRange',{month: this.monthNames.indexOf(this.activeMonth), year:this.activeYear, dateRangeStr:this.activeMonth+", "+this.activeYear});
+        this.$emit('switchedDateRange',{month: this.monthNames.indexOf(this.activeMonth)+1, year:this.activeYear, dateRangeStr:this.activeMonth+", "+this.activeYear});
     }
 
   }
