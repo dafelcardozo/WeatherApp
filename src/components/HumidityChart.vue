@@ -18,9 +18,8 @@
       }"/>
 </template>
 <script>
-
-import axios from 'axios';
 import SimpleLineWrapper from "@/components/SimpleLineWrapper";
+import {measurements} from "@/api";
 
 export default {
   components: {SimpleLineWrapper},
@@ -46,13 +45,12 @@ export default {
   },
   methods: {
     update() {
-      axios.get(`${process.env.VUE_APP_WS_URL}/field_measurements?field=relative_humidity_9am&month=${this.month}&year=${this.year}`)
+      measurements('relative_humidity_9am', this.year, this.month)
       .then(({data}) => {
         this.relative_humidity_9am = data.data;
         this.days = [...Array(data.data.length).keys()];
       });
-
-      axios.get(`${process.env.VUE_APP_WS_URL}/field_measurements?field=relative_humidity_3pm&month=${this.month}&year=${this.year}`)
+      measurements('relative_humidity_3pm', this.year, this.month)
       .then(({data}) => {
         this.relative_humidity_3pm = data.data;
         this.days = [...Array(data.data.length).keys()];

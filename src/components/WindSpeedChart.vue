@@ -18,9 +18,8 @@
   />
 </template>
 <script>
-
-import axios from 'axios';
 import SimpleLineWrapper from "@/components/SimpleLineWrapper";
+import {measurements} from "@/api";
 
 export default {
   components: {  SimpleLineWrapper },
@@ -47,12 +46,12 @@ export default {
   },
   methods: {
     update() {
-      axios.get(`${process.env.VUE_APP_WS_URL}/field_measurements?field=avg_wind_speed_9am&month=${this.month}&year=${this.year}`)
+      measurements('avg_wind_speed_9am', this.year, this.month)
       .then(({data}) => {
         this.avg_wind_speed_9am = data.data;
         this.days = [...Array(data.data.length).keys()];
       });
-      axios.get(`${process.env.VUE_APP_WS_URL}/field_measurements?field=max_wind_speed_9am&month=${this.month}&year=${this.year}`)
+      measurements('max_wind_speed_9am', this.year, this.month)
       .then(({data}) => {
         this.max_wind_speed_9am = data.data;
         this.days = [...Array(data.data.length).keys()];

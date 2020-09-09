@@ -4,9 +4,8 @@
   <simple-line-wrapper v-if="loaded" :chartData="pressure"/>
 </template>
 <script>
-
-import axios from 'axios';
 import SimpleLineWrapper from "@/components/SimpleLineWrapper";
+import {measurements} from "@/api";
 
 export default {
   components: {SimpleLineWrapper},
@@ -30,8 +29,7 @@ export default {
   },
   methods: {
     async update() {
-      const {data} = await axios.get(`${process.env.VUE_APP_WS_URL}/field_measurements?field=air_pressure_9am&month=${this.month}&year=${this.year}`);
-
+      const {data} = await measurements('air_pressure_9am', this.year, this.month);
       const days = [...Array(data.data.length).keys()];
       this.pressure = {
         labels: days,
@@ -39,7 +37,7 @@ export default {
           {
             label: '9 am Pressure this month',
             backgroundColor: "rgba(255,10,13, 0.2)",
-            data: data.data,
+            data: data.data
           }
         ]
       };
