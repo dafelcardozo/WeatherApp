@@ -1,7 +1,21 @@
 <style scoped>
 </style>
 <template>
-  <simple-line-wrapper v-if="loaded" :chartData="humidity"/>
+  <simple-line-wrapper v-if="loaded" :chartData="{
+        labels: days,
+        datasets: [
+          {
+            label: '9 am relative humidity this month',
+            backgroundColor: 'rgba(10,255,0, 0.2)',
+            data: relative_humidity_9am,
+          },
+          {
+            label: '3 pm relative humidity this month',
+            backgroundColor: 'rgba(240,230,140, 0.9)',
+            data: relative_humidity_3pm,
+          }
+        ]
+      }"/>
 </template>
 <script>
 
@@ -12,7 +26,9 @@ export default {
   components: {SimpleLineWrapper},
   data: () => ({
     loaded: false,
-    humidity: null,
+    relative_humidity_9am: [],
+    relative_humidity_3pm: [],
+    days: []
   }),
   props: ['month', 'year', 'dateRangeStr'],
   watch: {
@@ -23,32 +39,24 @@ export default {
       this.update();
     }
   },
-  async mounted() {
+  mounted() {
     this.loaded = false;
-    await this.update();
+    this.update();
     this.loaded = true;
   },
   methods: {
-    async update() {
-      const {data} = await axios.get(`${process.env.VUE_APP_WS_URL}/field_measurements?field=relative_humidity_9am&month=${this.month}&year=${this.year}`);
-      const {data: data1} = await axios.get(`${process.env.VUE_APP_WS_URL}/field_measurements?field=relative_humidity_3pm&month=${this.month}&year=${this.year}`);
+    update() {
+      axios.get(`${process.env.VUE_APP_WS_URL}/field_measurements?field=relative_humidity_9am&month=${this.month}&year=${this.year}`)
+      .then(({data}) => {
+        this.relative_humidity_9am = data.data;
+        this.days = [...Array(data.data.length).keys()];
+      });
 
-      const days = [...Array(data.data.length).keys()];
-      this.humidity = {
-        labels: days,
-        datasets: [
-          {
-            label: '9 am relative humidity this month',
-            backgroundColor: "rgba(10,255,0, 0.2)",
-            data: data.data,
-          },
-          {
-            label: '3 pm relative humidity this month',
-            backgroundColor: "rgba(240,230,140, 0.9)",
-            data: data1.data,
-          }
-        ]
-      };
+      axios.get(`${process.env.VUE_APP_WS_URL}/field_measurements?field=relative_humidity_3pm&month=${this.month}&year=${this.year}`)
+      .then(({data}) => {
+        this.relative_humidity_3pm = data.data;
+        this.days = [...Array(data.data.length).keys()];
+      });
     }
   }
 }
